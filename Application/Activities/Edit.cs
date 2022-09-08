@@ -32,12 +32,10 @@ namespace Application.Activities
             {
                 var activity = 
                 await _context.Activities.FindAsync(request.Activity.Id);
-                // 5/16 4:20 
-                //activity.Title = request.Activity.Title ?? activity.Title;
                 _mapper.Map(request.Activity, activity);
                 await _context.SaveChangesAsync();
 
-                return Unit.Value; // 3:49
+                return Unit.Value; 
 
             }
         }
