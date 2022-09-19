@@ -1,5 +1,3 @@
-import { isValidDateValue } from '@testing-library/user-event/dist/utils';
-import React from 'react';
 import { Dimmer, Loader } from 'semantic-ui-react';
 
 interface Props {
