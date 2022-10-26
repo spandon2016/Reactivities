@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosError, AxiosResponse } from "axios";
+import axios, { Axios, AxiosError, AxiosResponse, AxiosRequestHeaders } from "axios";
 import { _getGlobalState } from "mobx";
 import { totalmem } from "os";
 import { toNamespacedPath } from "path";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { history } from "../..";
 import { isJSDocDeprecatedTag } from "typescript";
 import { store } from "../stores/store";
+import { User, UserFormValues } from "../models/user";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -17,6 +18,11 @@ const sleep = (delay: number) => {
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token) config.headers!.Authorization = `Bearer ${token}`
+    return config; 
+})
 axios.interceptors.response.use(async response => {
  
         await sleep(1000);
@@ -77,8 +83,17 @@ const Activities = {
     delete: (id: string) => requests.del<void>(`/activities/${id}`)
 }
 
-const agent = {
-    Activities
+const Account = {
+    current: () => requests.get<User>('/account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
 }
 
+
+const agent = {
+    Activities,
+    Account
+}
+
+// 147 , 10 s
 export default agent;

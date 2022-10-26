@@ -15,6 +15,8 @@ using Application.Activities;
 using AutoMapper;
 using Application.Core;
 using System.Collections.Generic;
+using Application.Interfaces;
+using Infrastructure.Security;
 
 namespace API.Extensions
 {
@@ -44,6 +46,9 @@ namespace API.Extensions
             services.AddMediatR(typeof(List.Handler).Assembly);  
             //add mapper
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
+            //add IUserAccessor
+            services.AddScoped<IUserAccessor, UserAccessor>();
             
             return services;
 
