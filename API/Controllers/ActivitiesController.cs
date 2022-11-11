@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Domain;
-using API.Extensions;
+using System;
+using System.Threading.Tasks;
 using Application.Activities;
-using Infrastructure.Security;
+using Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {

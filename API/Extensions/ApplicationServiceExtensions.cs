@@ -1,22 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Application.Activities;
-using AutoMapper;
 using Application.Core;
-using System.Collections.Generic;
 using Application.Interfaces;
 using Infrastructure.Security;
+using Infrastructure.Photos;
 
 namespace API.Extensions
 {
@@ -49,6 +39,10 @@ namespace API.Extensions
 
             //add IUserAccessor
             services.AddScoped<IUserAccessor, UserAccessor>();
+
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
             
             return services;
 
