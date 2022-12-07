@@ -17,6 +17,15 @@ namespace API.Controllers
                 ));
 
         }
+
+        //Update the ProfilesController and add an endpoint for editing the profile
+        [HttpPut]
+        public async Task<IActionResult> Edit(EditProfile.Command command)
+        {
+            
+            return HandleResult(await Mediator.Send(command));
+
+        }
         
     }
 }
