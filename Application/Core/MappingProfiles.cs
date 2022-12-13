@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Domain;
 using Application.Activities;
+using Application.Comments;
 
 // 2:13 may 11, less 39
 
@@ -32,6 +33,15 @@ namespace Application.Core
             o => o.MapFrom(
                 s=> s.Photos.FirstOrDefault(
                     x => x.IsMain).Url));
+            
+            CreateMap<Comment, CommentDto>()
+                .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
+                .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName))
+                .ForMember(d => d.Image, 
+                        o => o.MapFrom(
+                        s=> s.Author.Photos.FirstOrDefault(
+                        x => x.IsMain).Url));
+
         } 
     
     }
