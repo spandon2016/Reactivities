@@ -3,7 +3,6 @@ import agent from "../api/agent";
 import { Activity, ActivityFormValues } from "../models/activity";
 import { format } from 'date-fns';
 import { store } from "./store";
-import { findAllByTestId } from "@testing-library/react";
 import { Profile } from "../models/profile";
 
 
@@ -218,6 +217,21 @@ export default class ActivityStore {
         {
             runInAction(() => this.loading = false);
         }
+    }
+
+    updateAttendeeFollowing = (username: string) => {
+        this.activityRegistry.forEach(activity => {
+            activity.attendees?.forEach(attendee => {
+                if (attendee.username === username) {
+                    console.log("activityStore.updateAttendeeFollowing  username= " + username);
+                    attendee.following ? attendee.followersCount-- 
+                    : attendee.followersCount++;
+                    attendee.following = !attendee.following;
+
+                }
+
+            })
+        })
     }
 
     clearSelectedActivity =() => {

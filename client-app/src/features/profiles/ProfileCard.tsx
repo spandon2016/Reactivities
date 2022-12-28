@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import { Profile } from '../../app/models/profile';
+import FollowButton from './FollowButton';
 
 interface Props {
     profile: Profile;
@@ -12,7 +13,7 @@ interface Props {
 export default observer(function ProfileCard({profile}: Props) 
 {
     function truncate(str: string | undefined) {
-        console.log('str len = ' +  str!.length);
+        //console.log('str len = ' +  str!.length);
         if (str) {
             console.log('str len = ' +  str.length);
             return str.length > 40 ? str.substring(0, 37) 
@@ -23,13 +24,14 @@ export default observer(function ProfileCard({profile}: Props)
         <Card as={Link} to={`/profiles/${profile.username}`}>
             <Image src={profile.image || '/assets/user.png'} />
             <Card.Content>
-                <Card.Header>{profile.displayName} + "poopppp " </Card.Header>
+                <Card.Header>{profile.displayName}</Card.Header>
                 <Card.Description>{truncate(profile.bio)}</Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <Icon name='user' />
-                20 followers
+                {profile.followersCount} followers
             </Card.Content>
+            <FollowButton profile={profile} />
         </Card>
     )
 })
