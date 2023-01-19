@@ -7,7 +7,7 @@ using Application.Comments;
 
 namespace Application.Core
 {
-    public class MappingProfiles : Profile
+    public class MappingProfiles : AutoMapper.Profile
     {
         public MappingProfiles()
         {
@@ -55,6 +55,17 @@ namespace Application.Core
                         o => o.MapFrom(
                         s=> s.Author.Photos.FirstOrDefault(
                         x => x.IsMain).Url));
+
+            CreateMap<ActivityAttendee, Profiles.UserActivityDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(s => s.Activity.Id))
+            .ForMember(d => d.Date, o => o.MapFrom(s => s.Activity.Date))
+            .ForMember(d => d.Title, o => o.MapFrom(s => s.Activity.Title))
+            .ForMember(d => d.Category, o => o.MapFrom(s => 
+            s.Activity.Category))
+            .ForMember(d => d.HostUsername, o => o.MapFrom(s => 
+            s.Activity.Attendees.FirstOrDefault(x => 
+            x.IsHost).AppUser.UserName));
+            
 
         } 
     

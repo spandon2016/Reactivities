@@ -7,6 +7,8 @@ using Application.Core;
 using Application.Interfaces;
 using Infrastructure.Security;
 using Infrastructure.Photos;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 namespace API.Extensions
 {
@@ -49,6 +51,9 @@ namespace API.Extensions
 
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
             services.AddSignalR();
+
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<Create>();
             
             return services;
 

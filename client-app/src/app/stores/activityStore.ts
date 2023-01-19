@@ -107,7 +107,7 @@ export default class ActivityStore {
         this.loadingInitial = true;
         try {
             const result = await agent.Activities.list(this.axiosParams);
-            result.data.forEach(activity => {
+            result.data.forEach((activity : any )=> {
                 this.setActivity(activity);
             })
             this.setPagination(result.pagination);
