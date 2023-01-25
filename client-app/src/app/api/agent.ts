@@ -1,12 +1,11 @@
-import axios, { Axios, AxiosError, AxiosResponse, AxiosRequestHeaders } from "axios";
-import { Activity, ActivityFormValues } from "../models/activity";
-import { toast } from "react-toastify";
-import { history } from "../..";
-import { store } from "../stores/store";
-import { User, UserFormValues } from "../models/user";
-import { Photo, Profile } from "../models/profile";
-import { PaginatedResults } from "../models/pagination";
-
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { toast } from 'react-toastify';
+import { Activity, ActivityFormValues } from '../models/activity';
+import { PaginatedResults } from '../models/pagination';
+import { Photo, Profile, UserActivity } from '../models/profile';
+import { User, UserFormValues } from '../models/user';
+import { router } from '../router/Routes';
+import { store } from '../stores/store';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -104,8 +103,10 @@ const Profiles = {
     deletePhoto: (id: string) => axios.delete(`/photos/${id}`),
     updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
     updateFollowing: (username: string) => requests.post(`/follow/${username}`, {}),
-    listFollowings: (username: string, predicate: string)  =>
-        requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`)
+    listFollowings: (username: string, predicate: string) => requests
+        .get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+    listActivities: (username: string, predicate: string) =>
+        requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
 }
 
 const agent = {
