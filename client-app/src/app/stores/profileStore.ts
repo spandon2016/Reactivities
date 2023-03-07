@@ -165,25 +165,31 @@ export default class ProfileStore {
 
     updateFollowing = async (username: string, following: boolean) =>
     {
-        // console.log("in profileStore.updateFollowing"); 
+        console.log("in profileStore.updateFollowing username=" + username ); 
 
         this.loading = true; 
         try {
             await agent.Profiles.updateFollowing(username);
             store.activityStore.updateAttendeeFollowing(username);
             runInAction(() => {
-                if (this.profile && this.profile.username !== 
-                    store.userStore.user?.userName
-                    && this.profile.username !== username) {
-                        following ? this.profile.followersCount++ : 
-                            this.profile.followersCount--;
+                if (this.profile && this.profile.username !== store.userStore.user?.userName
+                    && this.profile.username === username) {
+                        if (following  == true)
+                        { 
+                            this.profile.followersCount++;
+                            console.log("adding to count");
+                        }
+                        else
+                        {
+                             this.profile.followersCount--;
+                             console.log("decrementing count");
+                        }
                     this.profile.following = !this.profile.following; 
 
                 }
                 if (this.profile && this.profile.username ===
                     store.userStore.user?.userName) 
                 {
-                    //10:02 lesson 233
                     following ? this.profile.followersCount++ :
                     this.profile.followersCount--;
                    

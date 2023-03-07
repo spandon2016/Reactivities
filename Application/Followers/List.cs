@@ -5,6 +5,8 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Application.Core;
 using Application.Interfaces;
+using Application.Profiles;
+using Profile = Application.Profiles.Profile;
 
 namespace Application.Followers
 {
@@ -12,7 +14,7 @@ namespace Application.Followers
     {
 
 
-        public class Query : IRequest<Result<List<Profiles.Profile>>>
+        public class Query : IRequest<Result<List<Profile>>>
         {
 
             public string Predicate { get; set; }
