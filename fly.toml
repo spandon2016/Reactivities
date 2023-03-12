@@ -1,6 +1,6 @@
-# fly.toml file generated for reactivities-lla on 2023-03-09T14:53:56-05:00
+# fly.toml file generated for reactivities-la on 2023-03-12T11:03:16-04:00
 
-app = "reactivities-lla"
+app = "reactivities-la"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "yyz"
@@ -10,9 +10,9 @@ processes = []
   image = "spandon/reactivities:latest"
 
 [env]
-  ASNETCORE_URLS="http://+:8080"
-  Cloudinary__CloudName="dafz3nsob"
-  Cloudinary__ApiKey="527635945156896"
+  ASNETCORE_URLS = "http://+:8080"
+  Cloudinary__ApiKey = "527635945156896"
+  Cloudinary__CloudName = "dafz3nsob"
 
 [experimental]
   auto_rollback = true
