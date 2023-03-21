@@ -1,44 +1,36 @@
-# fly.toml file generated for reactivities-la on 2023-03-12T11:03:16-04:00
+ervices.AddDbContext<DataContext>(options =>
+{
+    var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-app = "reactivities-la"
-kill_signal = "SIGINT"
-kill_timeout = 5
-primary_region = "yyz"
-processes = []
+    string connStr;
 
-[build]
-  image = "spandon/reactivities:latest"
+    // Depending on if in development or production, use either FlyIO
+    // connection string, or development connection string from env var.
+    if (env == "Development")
+    {
+        // Use connection string from file.
+        connStr = config.GetConnectionString("DefaultConnection");
+    }
+    else
+    {
+        // Use connection string provided at runtime by FlyIO.
+        var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-[env]
-  ASPNETCORE_URLS = "http://+:8080"
-  Cloudinary__ApiKey = "527635945156896"
-  Cloudinary__CloudName = "dafz3nsob"
+        // Parse connection URL to connection string for Npgsql
+        connUrl = connUrl.Replace("postgres://", string.Empty);
+        var pgUserPass = connUrl.Split("@")[0];
+        var pgHostPortDb = connUrl.Split("@")[1];
+        var pgHostPort = pgHostPortDb.Split("/")[0];
+        var pgDb = pgHostPortDb.Split("/")[1];
+        var pgUser = pgUserPass.Split(":")[0];
+        var pgPass = pgUserPass.Split(":")[1];
+        var pgHost = pgHostPort.Split(":")[0];
+        var pgPort = pgHostPort.Split(":")[1];
 
-[experimental]
-  auto_rollback = true
+        connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+    }
 
-[[services]]
-  http_checks = []
-  internal_port = 8080
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
-
-  [[services.tcp_checks]]
-    grace_period = "1s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "2s"
+    // Whether the connection string came from the local development configuration file
+    // or from the environment variable from FlyIO, use it to set up your DbContext.
+    options.UseNpgsql(connStr);
+});
