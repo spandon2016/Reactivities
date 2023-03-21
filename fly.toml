@@ -10,7 +10,7 @@ processes = []
   image = "spandon/reactivities:latest"
 
 [env]
-  ASNETCORE_URLS = "http://+:8080"
+  ASPNETCORE_URLS = "http://+:8080"
   Cloudinary__ApiKey = "527635945156896"
   Cloudinary__CloudName = "dafz3nsob"
 
