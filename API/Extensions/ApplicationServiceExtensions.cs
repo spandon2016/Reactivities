@@ -40,28 +40,7 @@ namespace API.Extensions
                 {
                     // Use connection string from file.
                     connStr = config.GetConnectionString("DefaultConnection");
-                    connStr = "Server=reactivities-la-db.internal; Port=5432; User Id=postgres; Password=6bZXv1bD34yBwni; Database=reactivities";
-                    // confi== Server=reactivities-la-db.flycast;Port=5432;User Id=reactivities_la;Password=QASQs6rs4RGkIQi;Database=reactivities_la?sslmode=disable;
-                    Console.WriteLine("config in prod= {0}", connStr);
-                    /*
-                        
-Postgres cluster reactivities-la-db created
-  Username:    postgres
-  Password:    6bZXv1bD34yBwni
-  Hostname:    reactivities-la-db.internal
-  Flycast:     fdaa:1:995a:0:1::7
-  Proxy port:  5432
-  Postgres port:  5433
-  Connection string: postgres://postgres:6bZXv1bD34yBwni@reactivities-la-db.flycast:5432
-  */
-
-  //config in prod= Server=host.docker.internal; Port=5432; User Id=admin; Password=secret; Database=reactivities
-  // Server=reactivities-la-db.internal; Port=5432; User Id=postgres; Password=6bZXv1bD34yBwni; Database=reactivities
-
-                    //Console.WriteLine("{0}.{1}.{2}", mon, da, yer);
-                    // Console.WriteLine($"{mon}.{da}.{yer}");  // note the $ prefix.
-                
-
+                  
                     
                     // Use connection string provided at runtime by FlyIO.
                     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
@@ -78,7 +57,7 @@ Postgres cluster reactivities-la-db created
                     var pgPort = pgHostPort.Split(":")[1];
 
                     connStr2 = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-                    Console.WriteLine("config in prod form env= {0}", connStr2);
+                  //  Console.WriteLine("config in prod form env= {0}", connStr2);
                    // disable the reading of DATABASE_URL and build - the  connStr = connStr2;
                 
                 }
@@ -86,7 +65,7 @@ Postgres cluster reactivities-la-db created
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from FlyIO, use it to set up your DbContext.
                 // !!!  
-                Console.WriteLine("config in prod form env delete me= {0}", connStr);
+                //Console.WriteLine("config in prod form env delete me= {0}", connStr);
                 options.UseNpgsql(connStr);
             });
 
