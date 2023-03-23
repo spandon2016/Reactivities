@@ -41,6 +41,7 @@ namespace API.Extensions
                     // Use connection string from file.
                     connStr = config.GetConnectionString("DefaultConnection");
                     connStr = "Server=reactivities-la-db.internal; Port=5432; User Id=postgres; Password=6bZXv1bD34yBwni; Database=reactivities";
+                    // confi== Server=reactivities-la-db.flycast;Port=5432;User Id=reactivities_la;Password=QASQs6rs4RGkIQi;Database=reactivities_la?sslmode=disable;
                     Console.WriteLine("config in prod= {0}", connStr);
                     /*
                         
@@ -78,11 +79,14 @@ Postgres cluster reactivities-la-db created
 
                     connStr2 = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
                     Console.WriteLine("config in prod form env= {0}", connStr2);
+                   // disable the reading of DATABASE_URL and build - the  connStr = connStr2;
                 
                 }
 
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from FlyIO, use it to set up your DbContext.
+                // !!!  
+                Console.WriteLine("config in prod form env delete me= {0}", connStr);
                 options.UseNpgsql(connStr);
             });
 
