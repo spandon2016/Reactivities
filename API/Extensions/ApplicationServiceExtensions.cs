@@ -25,9 +25,13 @@ namespace API.Extensions
             services.AddDbContext<DataContext>(options =>
             {
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                
 
                 string connStr;
                 string connStr2;
+
+
+//                Console.WriteLine("*** env= {0}", env);
 
                 // Depending on if in development or production, use either FlyIO
                 // connection string, or development connection string from env var.
@@ -44,6 +48,9 @@ namespace API.Extensions
                     
                     // Use connection string provided at runtime by FlyIO.
                     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+                    // 20230325 your DATABASE url is giving you the wrong data, that's why you created constr2 and constr1
+                    // you can see what the connUrl looks like and replace it with the one given to you on creation of the
+                    // postgress db
 
                     // Parse connection URL to connection string for Npgsql
                     connUrl = connUrl.Replace("postgres://", string.Empty);
@@ -57,7 +64,7 @@ namespace API.Extensions
                     var pgPort = pgHostPort.Split(":")[1];
 
                     connStr2 = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-                  //  Console.WriteLine("config in prod form env= {0}", connStr2);
+                //    Console.WriteLine("config in prod form env= {0}", connStr2);
                    // disable the reading of DATABASE_URL and build - the  connStr = connStr2;
                 
                 }
@@ -65,7 +72,7 @@ namespace API.Extensions
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from FlyIO, use it to set up your DbContext.
                 // !!!  
-                //Console.WriteLine("config in prod form env delete me= {0}", connStr);
+   //             Console.WriteLine("config in prod form env delete me= {0}", connStr);
                 options.UseNpgsql(connStr);
             });
 

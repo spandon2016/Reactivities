@@ -8,12 +8,13 @@ processes = []
 
 [build]
   image = "spandon/reactivities:latest"
-  Cloudinary__CloudName="dafz3nsob"
-  Coudinary__ApiKey="527635945156896"
+
  
 
 [env]
   ASPNETCORE_URLS="http://+:8080"
+  Cloudinary__CloudName="dafz3nsob"
+  Coudinary__ApiKey="527635945156896"
 
 [experimental]
   auto_rollback = true
