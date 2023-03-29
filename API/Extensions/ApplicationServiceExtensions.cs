@@ -64,7 +64,7 @@ namespace API.Extensions
                     var pgPort = pgHostPort.Split(":")[1];
 
                     connStr2 = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-                //    Console.WriteLine("config in prod form env= {0}", connStr2);
+                   // Console.WriteLine("config in prod form env= {0}", connStr2);
                    // disable the reading of DATABASE_URL and build - the  connStr = connStr2;
                 
                 }
@@ -72,7 +72,7 @@ namespace API.Extensions
                 // Whether the connection string came from the local development configuration file
                 // or from the environment variable from FlyIO, use it to set up your DbContext.
                 // !!!  
-   //             Console.WriteLine("config in prod form env delete me= {0}", connStr);
+               //  Console.WriteLine("config in prod form env delete me= {0}", connStr);
                 options.UseNpgsql(connStr);
             });
 
